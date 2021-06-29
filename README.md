@@ -7,7 +7,7 @@
 
 
 ```
-git clone https://github.com/zeliwipin/marvel-frontend
+git clone https://github.com/zeliwipin/mern-backend-boilerplate
 ```
 
 ## Usage
