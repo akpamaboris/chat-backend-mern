@@ -24,6 +24,6 @@ app.use(signup);
 app.use(login);
 app.use(me);
 
-app.listen(3000, (req, res) => {
-  console.log("server started at port 3000");
+app.listen(3010, (req, res) => {
+  console.log("server started at port 3010");
 });
