@@ -22,7 +22,7 @@ https://github.com/zeliwipin/mern-frontend-boilerplate
 
 ```
 npm install
-npm start
+node index.js
 ```
 
 ## Contributing
