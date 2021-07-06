@@ -12,7 +12,7 @@ const me = require("./routes/me");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-mongoose.connect("mongodb://localhost:27017/test-auth", {
+mongoose.connect("mongodb://localhost:27017/test-chat", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
