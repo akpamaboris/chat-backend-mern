@@ -39,6 +39,7 @@ const Room = mongoose.model("Room", {
   name: {
     unique: true,
     type: String,
+    required: true,
   },
 });
 
