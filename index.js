@@ -100,7 +100,7 @@ io.on("connection", (socket) => {
   registerRooms(roomId);
 
   socket.on("wantroom", (data) => {
-    // console.log("on wantroom");
+    console.log("on wantroom");
     Room.find().then((result) => {
       // io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
       // console.log(result);
