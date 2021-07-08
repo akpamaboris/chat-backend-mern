@@ -100,10 +100,10 @@ io.on("connection", (socket) => {
   registerRooms(roomId);
 
   socket.on("wantroom", (data) => {
-    console.log("on wantroom");
+    // console.log("on wantroom");
     Room.find().then((result) => {
       // io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-      console.log(result);
+      // console.log(result);
       socket.emit("wantroom", result);
     });
   });
@@ -117,12 +117,27 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("deleteRoom", (data) => {
+    console.log("on deleteroom");
+    console.log("room name =>", data.roomName);
+    Room.remove({ name: data.roomName }).then((result) => {
+      console.log(result);
+    });
+    Message.remove({ room: data.roomName }).then((result) => {
+      console.log(result);
+      Message.find({ room: roomId }).then((result) => {
+        // io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+        console.log(result);
+        socket.emit("history", result);
+      });
+    });
+  });
   // Listen for new messages
   socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
     // io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
 
-    console.log("roomId ===", roomId);
-    console.log("sender", data.realName);
+    // console.log("roomId ===", roomId);
+    // console.log("sender", data.realName);
 
     const newMessage = Message({
       text: data.body,
@@ -130,7 +145,7 @@ io.on("connection", (socket) => {
       senderId: data.senderId,
       realName: data.realName,
     });
-    console.log("searching messages");
+    // console.log("searching messages");
     newMessage.save().then(() => {
       io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
     });
