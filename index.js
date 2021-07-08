@@ -10,6 +10,7 @@ const login = require("./routes/login");
 const me = require("./routes/me");
 
 const app = express();
+require("dotenv").config();
 
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
@@ -19,7 +20,7 @@ const io = require("socket.io")(server, {
 });
 app.use(cors());
 app.use(bodyParser.json());
-mongoose.connect("mongodb://localhost:27017/test-chat", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -96,6 +97,15 @@ io.on("connection", (socket) => {
 
   registerRooms(roomId);
 
+  socket.on("wantroom", (data) => {
+    console.log("on wantroom");
+    Room.find().then((result) => {
+      // io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+      console.log(result);
+      socket.emit("wantroom", result);
+    });
+  });
+
   socket.on(OLD_MESSAGES, (data) => {
     console.log("on history");
     Message.find({ room: roomId }).then((result) => {
@@ -133,6 +143,6 @@ io.on("connection", (socket) => {
 
 /* Socket.IO */
 
-server.listen(3010, (req, res) => {
+server.listen(process.env.PORT, (req, res) => {
   console.log("server started at port 3010");
 });
